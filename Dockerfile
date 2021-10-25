@@ -68,9 +68,6 @@ COPY --chown=ds:ds --from=ds-service \
 COPY --from=ds-service \
     /var/www/$COMPANY_NAME/documentserver/dictionaries \
     /var/www/$COMPANY_NAME/documentserver/dictionaries
-COPY --chown=ds:ds --from=ds-service \
-    /var/www/$COMPANY_NAME/documentserver-example/welcome \
-    /var/www/$COMPANY_NAME/documentserver-example/welcome
 RUN sed 's|\(application\/zip.*\)|\1\n    application\/wasm wasm;|' \
         -i /etc/nginx/mime.types && \
     sed 's,\(listen.\+:\)\([0-9]\+\)\(.*;\),'"\18888\3"',' \
@@ -95,7 +92,6 @@ RUN sed 's|\(application\/zip.*\)|\1\n    application\/wasm wasm;|' \
         /var/www/$COMPANY_NAME/documentserver/sdkjs \
         /var/www/$COMPANY_NAME/documentserver/sdkjs-plugins \
         /var/www/$COMPANY_NAME/documentserver/web-apps \
-        /var/www/$COMPANY_NAME/documentserver-example/welcome \
         -type f \
         \( -name *.js -o -name *.json -o -name *.htm -o -name *.html -o -name *.css \) \
         -exec sh -c 'gzip -cf9 $0 > $0.gz && chown ds:ds $0.gz' {} \;

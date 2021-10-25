@@ -1,4 +1,7 @@
 #!/bin/bash
 
 export PRODUCT_VERSION=$DOCKER_TAG
-docker-compose build --build-arg PRODUCT_EDITION=$PRODUCT_EDITION
+docker-compose build \
+  --build-arg PRODUCT_EDITION=$PRODUCT_EDITION \
+  --build-arg PRODUCT_URL=$PRODUCT_URL \
+  --build-arg COMPANY_NAME=$COMPANY_NAME
