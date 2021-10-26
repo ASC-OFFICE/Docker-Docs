@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  example:
+    image: onlyoffice/docs-example:latest
+    container_name: example
+    environment:
+      - JWT_ENABLED=false
+      # Uncomment the line below and enter your ONLYOFFICE Docs address
+      - DS_URL=http://10.0.2.15/
+    stdin_open: true
+    restart: always
+    ports:
+      - '3000:3000'
