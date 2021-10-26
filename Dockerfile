@@ -68,9 +68,6 @@ COPY --chown=ds:ds --from=ds-service \
 COPY --from=ds-service \
     /var/www/$COMPANY_NAME/documentserver/dictionaries \
     /var/www/$COMPANY_NAME/documentserver/dictionaries
-COPY --from=ds-service \
-    /var/www/$COMPANY_NAME/documentserver/server/welcome \
-    /var/www/$COMPANY_NAME/documentserver/server/welcome
 RUN sed 's|\(application\/zip.*\)|\1\n    application\/wasm wasm;|' \
         -i /etc/nginx/mime.types && \
     sed 's,\(listen.\+:\)\([0-9]\+\)\(.*;\),'"\18888\3"',' \
@@ -132,6 +129,9 @@ COPY --from=ds-service \
 COPY --from=ds-service \
     /var/www/$COMPANY_NAME/documentserver/server/DocService \
     /var/www/$COMPANY_NAME/documentserver/server/DocService
+COPY --from=ds-service \
+    /var/www/$COMPANY_NAME/documentserver/server/welcome \
+    /var/www/$COMPANY_NAME/documentserver/server/welcome
 COPY docker-entrypoint.sh /usr/local/bin/
 USER ds
 ENTRYPOINT docker-entrypoint.sh /var/www/$COMPANY_NAME/documentserver/server/DocService/docservice
