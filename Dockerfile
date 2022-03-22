@@ -32,6 +32,9 @@ COPY --chown=ds:ds \
 COPY --chown=ds:ds \
     fonts/* \
     /var/www/$COMPANY_NAME/documentserver/core-fonts/custom/
+COPY --chown=ds:ds \
+    plugins/* \
+    /var/www/$COMPANY_NAME/documentserver/sdkjs-plugins/
 RUN documentserver-generate-allfonts.sh true
 
 FROM ds-base AS proxy
@@ -47,10 +50,10 @@ RUN yum -y install epel-release sudo && \
     yum clean all && \
     rm -f /var/log/*log
 COPY --chown=ds:ds config/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY --chown=ds:ds --from=ds-service \
+COPY --chown=ds:ds --chmod=644 --from=ds-service \
     /etc/$COMPANY_NAME/documentserver/nginx/ds.conf \
     /etc/nginx/conf.d/
-COPY --chown=ds:ds --from=ds-service \
+COPY --chown=ds:ds --chmod=644 --from=ds-service \
     /etc/$COMPANY_NAME/documentserver*/nginx/includes/*.conf \
     /etc/nginx/includes/
 COPY --chown=ds:ds --from=ds-service \
@@ -112,6 +115,7 @@ ENTRYPOINT \
     envsubst < /tmp/proxy_nginx/includes/http-upstream.conf > /tmp/http-upstream.conf && \
     envsubst < /etc/nginx/includes/ds-common.conf | tee /tmp/proxy_nginx/includes/ds-common.conf > /dev/null && \
     sed -i 's/etc\/nginx/tmp\/proxy_nginx/g' /tmp/proxy_nginx/conf.d/ds.conf && \
+    sed 's/\(X-Forwarded-For\).*/\1 example.com;/' -i /tmp/proxy_nginx/includes/ds-example.conf && \
     exec nginx -c /tmp/proxy_nginx/nginx.conf -g 'daemon off;'
 
 FROM ds-base AS docservice
@@ -127,11 +131,17 @@ COPY --from=ds-service \
     /var/www/$COMPANY_NAME/documentserver/sdkjs-plugins \
     /var/www/$COMPANY_NAME/documentserver/sdkjs-plugins
 COPY --from=ds-service \
+    /var/www/$COMPANY_NAME/documentserver/web-apps/apps/common/main/resources/themes \
+    /var/www/$COMPANY_NAME/documentserver/web-apps/apps/common/main/resources/themes
+COPY --from=ds-service \
     /var/www/$COMPANY_NAME/documentserver/server/DocService \
     /var/www/$COMPANY_NAME/documentserver/server/DocService
 COPY --from=ds-service \
     /var/www/$COMPANY_NAME/documentserver/server/welcome \
     /var/www/$COMPANY_NAME/documentserver/server/welcome
+COPY --from=ds-service \
+    /var/www/$COMPANY_NAME/documentserver/server/info \
+    /var/www/$COMPANY_NAME/documentserver/server/info
 COPY docker-entrypoint.sh /usr/local/bin/
 USER ds
 ENTRYPOINT docker-entrypoint.sh /var/www/$COMPANY_NAME/documentserver/server/DocService/docservice
@@ -167,6 +177,7 @@ COPY --from=ds-service \
     /usr/lib64/libgraphics.so \
     /usr/lib64/libdoctrenderer.so \
     /usr/lib64/libkernel.so \
+    /usr/lib64/libkernel_network.so \
     /usr/lib64/libicudata.so.58 \
     /usr/lib64/libicuuc.so.58 \
     /usr/lib64/libDjVuFile.so \

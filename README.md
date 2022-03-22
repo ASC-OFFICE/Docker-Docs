@@ -61,21 +61,23 @@ Below is the complete list of parameters for `onlyoffice/docs-proxy`.
 
 Below is the complete list of parameters for `onlyoffice/docs-docservice`, `onlyoffice/docs-converter`.
 - **DB_HOST**: The IP address or the name of the host where the PostgreSQL server is running.
-- **DB_PORT**: The PostgreSQL server port number.
+- **DB_PORT**: The PostgreSQL server port number. Default to `5432`.
 - **DB_NAME**: The name of a PostgreSQL database to be created on the image startup.
 - **DB_USER**: The new user name with superuser permissions for the PostgreSQL account.
 - **DB_PWD**: The password set for the PostgreSQL account.
-- **AMQP_PROTO**: The protocol for the connection to AMQP server.
+- **AMQP_PROTO**: The protocol for the connection to AMQP server. Default to `amqp`. Possible values are `amqp`, `amqps`.
 - **AMQP_USER**: The username for the AMQP server account.
 - **AMQP_PWD**: The password set for the AMQP server account.
 - **AMQP_HOST**: The IP address or the name of the host where the AMQP server is running.
 - **REDIS_SERVER_HOST**: The IP address or the name of the host where the Redis server is running.
-- **REDIS_SERVER_PORT**:  The Redis server port number.
+- **REDIS_SERVER_PORT**:  The Redis server port number. Default to `6379`.
 - **JWT_ENABLED**: Specifies the enabling the JSON Web Token validation by the ONLYOFFICE Docs. Defaults to `false`.
 - **JWT_SECRET**: Defines the secret key to validate the JSON Web Token in the request to the ONLYOFFICE Docs. Defaults to `secret`.
 - **JWT_HEADER**: Defines the http header that will be used to send the JSON Web Token. Defaults to `Authorization`.
 - **JWT_IN_BODY**: Specifies the enabling the token validation in the request body to the ONLYOFFICE Docs. Defaults to `false`.
 - **LOG_LEVEL**: Defines the type and severity of a logged event. Default to `WARN`. Possible values are `ALL`, `TRACE`, `DEBUG`, `INFO`, `WARN`, `ERROR`, `FATAL`, `MARK`, `OFF`.
+- **LOG_TYPE**: Defines the format of a logged event. Default to `pattern`. Possible values are `pattern`, `json`, `basic`, `coloured`, `messagePassThrough`, `dummy`.
+- **LOG_PATTERN**: Defines the log [pattern](https://github.com/log4js-node/log4js-node/blob/master/docs/layouts.md#pattern-format) if `LOG_TYPE=pattern`. Default to `[%d] [%p] %c - %.10000m`.
 - **METRICS_ENABLED**: Specifies the enabling StatsD for ONLYOFFICE Docs. Defaults to `false`.
 - **METRICS_HOST**: Defines StatsD listening host. Defaults to `localhost`.
 - **METRICS_PORT**: Defines StatsD listening port. Defaults to `8125`.
