@@ -87,7 +87,6 @@ RUN sed 's|\(application\/zip.*\)|\1\n    application\/wasm wasm;|' \
     sed 's/#*\s*\(gzip_static\).*/\1 on;/g' -i /etc/nginx/includes/ds-docservice.conf && \
     sed -i 's/etc\/nginx/tmp\/proxy_nginx/g' /etc/nginx/nginx.conf && \
     sed -i 's/etc\/nginx/tmp\/proxy_nginx/g' /etc/nginx/conf.d/ds.conf && \
-    sed 's/\(X-Forwarded-For\).*/\1 example.com;/' -i /etc/nginx/includes/ds-example.conf && \
     chmod 755 /var/log/nginx && \
     ln -sf /dev/stdout /var/log/nginx/access.log && \
     ln -sf /dev/stderr /var/log/nginx/error.log && \
@@ -204,48 +203,6 @@ RUN mkdir -p \
     chown -R ds:ds /var/lib/$COMPANY_NAME/documentserver
 USER ds
 ENTRYPOINT docker-entrypoint.sh /var/www/$COMPANY_NAME/documentserver/server/FileConverter/converter
-
-FROM node:buster AS example
-LABEL maintainer Ascensio System SIA <support@onlyoffice.com>
-
-ENV LANG=en_US.UTF-8 \
-    LANGUAGE=en_US:en \
-    LC_ALL=en_US.UTF-8 \
-    NODE_ENV=production-linux \
-    NODE_CONFIG_DIR=/etc/onlyoffice/documentserver-example/
-
-WORKDIR /var/www/onlyoffice/documentserver-example/
-
-RUN git clone \
-      --depth 1 \
-      --recurse-submodules \
-      https://github.com/ONLYOFFICE/document-server-integration.git && \
-    mkdir -p /var/www/onlyoffice/documentserver-example && \
-    cp -r ./document-server-integration/web/documentserver-example/nodejs/. \
-      /var/www/onlyoffice/documentserver-example/ && \
-    rm -rf ./document-server-integration && \
-    groupadd --system --gid 1001 ds && \
-    useradd \
-      --system \
-      -g ds \
-      --home-dir /var/www/onlyoffice/documentserver-example \
-      --create-home \
-      --shell /sbin/nologin \
-      --uid 1001 ds && \
-    chown -R ds:ds /var/www/onlyoffice/documentserver-example/ && \
-    mkdir -p /var/lib/onlyoffice/documentserver-example/ && \
-    chown -R ds:ds /var/lib/onlyoffice/ && \
-    mv files /var/lib/onlyoffice/documentserver-example/ && \
-    mkdir -p /etc/onlyoffice/documentserver-example/ && \
-    chown -R ds:ds /etc/onlyoffice/ && \
-    mv config/* /etc/onlyoffice/documentserver-example/ && \
-    npm install
-
-EXPOSE 3000
-
-USER ds
-
-ENTRYPOINT /var/www/onlyoffice/documentserver-example/docker-entrypoint.sh npm start
 
 FROM statsd/statsd AS metrics
 ARG COMPANY_NAME=onlyoffice
