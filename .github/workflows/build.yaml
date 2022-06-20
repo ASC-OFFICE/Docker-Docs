@@ -40,7 +40,7 @@ jobs:
           DOCKER_TAG=$(echo ${{ steps.tag_name.outputs.SOURCE_TAG }} | sed 's/^.//')
           PRODUCT_EDITION=${{ matrix.edition }} \
           TAG=${DOCKER_TAG} \
-          PREFIX_NAME=docs-
+          PREFIX_NAME=docs- \
           COMPANY_NAME=${{ secrets.COMPANY_NAME }} \
           PRODUCT_URL=${{ secrets.PRODUCT_URL }} \
           ACCOUNT_NAME=${{ secrets.ACCOUNT_NAME }} \
