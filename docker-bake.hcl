@@ -12,7 +12,7 @@ variable "COMPANY_NAME" {
 }
 
 variable "PREFIX_NAME" { 
-    default = ""
+    default = "docs"
 } 
 
 variable "PRODUCT_EDITION" {
@@ -31,7 +31,7 @@ group "apps" {
 
 target "proxy" {
     target = "proxy"
-    tags = ["docker.io/${ACCOUNT_NAME}/${PREFIX_NAME}proxy${PRODUCT_EDITION}:${TAG}"]
+    tags = ["docker.io/${ACCOUNT_NAME}/${PREFIX_NAME}-proxy${PRODUCT_EDITION}:${TAG}"]
     platforms = ["linux/amd64"]
     args = {
         "PRODUCT_EDITION": "${PRODUCT_EDITION}"
@@ -42,7 +42,7 @@ target "proxy" {
 
 target "converter" {
     target = "converter"  
-    tags = ["docker.io/${ACCOUNT_NAME}/${PREFIX_NAME}converter${PRODUCT_EDITION}:${TAG}"] 
+    tags = ["docker.io/${ACCOUNT_NAME}/${PREFIX_NAME}-converter${PRODUCT_EDITION}:${TAG}"] 
     platforms = ["linux/amd64"]
     args = {
         "PRODUCT_EDITION": "${PRODUCT_EDITION}"
@@ -53,7 +53,7 @@ target "converter" {
 
 target "docservice" {
     target = "docservice" 
-    tags = ["docker.io/${ACCOUNT_NAME}/${PREFIX_NAME}docservice${PRODUCT_EDITION}:${TAG}"]
+    tags = ["docker.io/${ACCOUNT_NAME}/${PREFIX_NAME}-docservice${PRODUCT_EDITION}:${TAG}"]
     platforms = ["linux/amd64"]
     args = {
         "PRODUCT_EDITION": "${PRODUCT_EDITION}"
