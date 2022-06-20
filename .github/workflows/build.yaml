@@ -42,7 +42,7 @@ jobs:
           TAG=${DOCKER_TAG} \
           PREFIX_NAME=docs- \
           COMPANY_NAME=${{ secrets.COMPANY_NAME }} \
-          URL=${{ secrets.PRODUCT_URL }} \
+          PRODUCT_URL=$ {{ secrets.PRODUCT_URL }} \
           ACCOUNT_NAME=${{ secrets.ACCOUNT_NAME }} \
             docker buildx bake \
             -f docker-bake.hcl ${{ matrix.images }} \

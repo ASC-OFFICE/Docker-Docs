@@ -18,14 +18,13 @@ RUN yum install sudo -y && \
 FROM ds-base AS ds-service
 ARG TARGETARCH
 ARG PRODUCT_EDITION=
-ARG URL=
-ARG PRODUCT_URL=$URL.$TARGETARCH.rpm
+ARG PRODUCT_URL=
 ENV TARGETARCH=$TARGETARCH
 RUN useradd --no-create-home --shell /sbin/nologin nginx && \
     yum -y updateinfo && \
     yum -y install cabextract fontconfig xorg-x11-font-utils xorg-x11-server-utils && \
     rpm -i https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm && \
-    PRODUCT_URL=$(echo $PRODUCT_URL | sed "s/"$TARGETARCH"/"$(uname -m)"/g") && \
+    PRODUCT_URL=$(echo $PRODUCT_URL | sed "s/"TARGETARCH"/"$(uname -m)"/g") && \
     rpm -ivh $PRODUCT_URL --noscripts --nodeps && \
     mkdir -p /var/www/$COMPANY_NAME/documentserver/core-fonts/msttcore && \
     cp -vt \
