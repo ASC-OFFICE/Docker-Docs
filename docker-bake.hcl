@@ -23,10 +23,6 @@ variable "PRODUCT_URL" {
     default = ""
 }
 
-variable "URL" {
-    default = ""
-}
-
 group "apps" {
     targets = ["proxy", "converter", "docservice"]
 }
@@ -41,7 +37,6 @@ target "proxy" {
         "PRODUCT_EDITION": "${PRODUCT_EDITION}"
         "COMPANY_NAME": "${COMPANY_NAME}"
         "PRODUCT_URL": "${PRODUCT_URL}"
-        "URL": "${URL}"
     }
 }
 
@@ -53,7 +48,6 @@ target "converter" {
         "PRODUCT_EDITION": "${PRODUCT_EDITION}"
         "COMPANY_NAME": "${COMPANY_NAME}"
         "PRODUCT_URL": "${PRODUCT_URL}"
-        "URL": "${URL}"
     }
 }
 
@@ -65,6 +59,5 @@ target "docservice" {
         "PRODUCT_EDITION": "${PRODUCT_EDITION}"
         "COMPANY_NAME": "${COMPANY_NAME}"
         "PRODUCT_URL": "${PRODUCT_URL}"
-        "URL": "${URL}"
     }
 }
