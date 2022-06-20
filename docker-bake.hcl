@@ -1,4 +1,4 @@
-## buildx bake configurations ###
+## buildx bake variables ###
 variable "TAG" {
     default = "" 
 }
@@ -23,6 +23,8 @@ group "apps" {
     targets = ["proxy", "converter", "docservice"]
 }
 
+### buildx bake targets ###
+
 target "proxy" {
     target = "proxy"
     tags = ["docker.io/${ACCOUNT_NAME}/${PREFIX_NAME}-proxy${PRODUCT_EDITION}:${TAG}"]
@@ -30,7 +32,7 @@ target "proxy" {
     args = {
         "PRODUCT_EDITION": "${PRODUCT_EDITION}"
         "COMPANY_NAME": "${COMPANY_NAME}"
-        "ACCOUNT_NAME": "${ACCOUNT_NAME}"
+        "PRODUCT_URL": "${PRODUCT_URL}"
     }
 }
 
@@ -41,7 +43,7 @@ target "converter" {
     args = {
         "PRODUCT_EDITION": "${PRODUCT_EDITION}"
         "COMPANY_NAME": "${COMPANY_NAME}"
-        "ACCOUNT_NAME": "${ACCOUNT_NAME}"
+        "PRODUCT_URL": "${PRODUCT_URL}"
     }
 }
 
@@ -52,6 +54,6 @@ target "docservice" {
     args = {
         "PRODUCT_EDITION": "${PRODUCT_EDITION}"
         "COMPANY_NAME": "${COMPANY_NAME}"
-        "ACCOUNT_NAME": "${ACCOUNT_NAME}"
+        "PRODUCT_URL": "${PRODUCT_URL}"
     }
 }

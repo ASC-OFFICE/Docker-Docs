@@ -38,8 +38,11 @@ jobs:
       - name: Build Community-Edition
         run: |
           DOCKER_TAG=$(echo ${{ steps.tag_name.outputs.SOURCE_TAG }} | sed 's/^.//')
-          PRODUCT_EDITION=${{ matrix.edition }} TAG=$DOCKER_TAG \
-          COMPANY_NAME=${{ sectets.COMPANY_NAME }} ACCOUNT_NAME=${{ secrets.ACCOUNT_NAME }} \
+          PRODUCT_EDITION=${{ matrix.edition }} \
+          TAG=$DOCKER_TAG \
+          COMPANY_NAME=${{ sectets.COMPANY_NAME }} \
+          PRODUCT_URL=${{ secrets.PRODUCT_URL }} \
+          ACCOUNT_NAME=${{ secrets.ACCOUNT_NAME }} \
             docker buildx bake \
             -f docker-bake.hcl ${{ matrix.images }} \
             --push
