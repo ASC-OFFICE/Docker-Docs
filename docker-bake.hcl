@@ -23,7 +23,7 @@ variable "PRODUCT_URL" {
     default = ""
 }
 
-varialbe "URL" {
+variable "URL" {
     default = ""
 }
 
