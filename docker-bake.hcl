@@ -23,6 +23,10 @@ variable "PRODUCT_URL" {
     default = ""
 }
 
+varialbe "URL" {
+    default = ""
+}
+
 group "apps" {
     targets = ["proxy", "converter", "docservice"]
 }
