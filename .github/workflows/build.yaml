@@ -38,10 +38,11 @@ jobs:
       - name: Build Community-Edition
         run: |
           DOCKER_TAG=$(echo ${{ steps.tag_name.outputs.SOURCE_TAG }} | sed 's/^.//')
+          PACKAGE_VERSION=$(echo $DOCKER_TAG | sed -E 's/(.*)\./\1-/')
           PRODUCT_EDITION=${{ matrix.edition }} \
           TAG=${DOCKER_TAG} \
           COMPANY_NAME=${{ secrets.COMPANY_NAME }} \
-          PRODUCT_URL=${{ secrets.PRODUCT_URL }} \
+          PRODUCT_URL=${{ secrets.PRODUCT_URL }}${PACKAGE_VERSION}.TARGETARCH.rpm \
           ACCOUNT_NAME=${{ secrets.ACCOUNT_NAME }} \
             docker buildx bake \
             -f docker-bake.hcl ${{ matrix.images }} \
