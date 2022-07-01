@@ -61,11 +61,3 @@ target "docservice" {
         "PRODUCT_URL": "${PRODUCT_URL}"
     }
 }
-
-### target for test build utils ((can be deleted)) ###
-
-target "utils" {
-    target = "utils"
-    tags = ["docker.io/${ACCOUNT_NAME}/${PREFIX_NAME}-utils:${TAG}"]
-    platforms = ["linux/amd64", "linux/arm64"]
-}

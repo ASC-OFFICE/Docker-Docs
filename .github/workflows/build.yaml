@@ -12,8 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        edition: [ "" ]
-        images: [ "utils" ]
+        edition: [ "-ee" ]
+        images: [ "proxy docservice converter" ]
     steps:
       - name: Checkout code 
         uses: actions/checkout@v3
