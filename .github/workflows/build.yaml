@@ -65,11 +65,11 @@ jobs:
         uses: docker/bake-action@v2.1.0
         with:
           set: |
-            *.args.TAG = ${DOCKER_TAG}
-            *.args.PRODUCT_EDITION = ${{ matrix.editions }}
-            *.args.COMPANY_NAME = ${{ secrets.COMPANY_NAME }}
-            *.args.PRODUCT_URL = ${{ secrets.PRODUCT_URL }}$PACKAGE_VERSION.TARGETARCH.rpm
-            *.args.ACCOUNT_NAME = ${{ secrets.ACCOUNT_NAME }}
+            *.args.TAG= '${DOCKER_TAG}'
+            *.args.PRODUCT_EDITION= '${{ matrix.edition }}'
+            *.args.COMPANY_NAME= '${{ secrets.COMPANY_NAME }}'
+            *.args.PRODUCT_URL= '${{ secrets.PRODUCT_URL }}$PACKAGE_VERSION.TARGETARCH.rpm'
+            *.args.ACCOUNT_NAME= '${{ secrets.ACCOUNT_NAME }}'
           push: true
           files: docker-bake.hcl
           targets: default 
