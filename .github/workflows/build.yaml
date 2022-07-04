@@ -69,8 +69,8 @@ jobs:
             proxy.tags=docker.io/${{ secrets.ACCOUNT_NAME }}/docs-proxy${{ matrix.edition }}:latest
             converter.tags=docker.io/${{ secrets.ACCOUNT_NAME }}/docs-converter${{ matrix.edition }}:${{ env.DOCKER_TAG }} 
             converter.tags=docker.io/${{ secrets.ACCOUNT_NAME }}/docs-converter${{ matrix.edition }}:latest
-            docservice.tags="docker.io/${{ secrets.ACCOUNT_NAME }}/docs-docservice${{ matrix.edition }}:${{ env.DOCKER_TAG }}
-            docservice.tags="docker.io/${{ secrets.ACCOUNT_NAME }}/docs-docservice${{ matrix.edition }}:latest
+            docservice.tags=docker.io/${{ secrets.ACCOUNT_NAME }}/docs-docservice${{ matrix.edition }}:${{ env.DOCKER_TAG }}
+            docservice.tags=docker.io/${{ secrets.ACCOUNT_NAME }}/docs-docservice${{ matrix.edition }}:latest
             *.args.PRODUCT_EDITION=${{ matrix.edition }}
             *.args.COMPANY_NAME=${{ secrets.COMPANY_NAME }}
             *.args.PRODUCT_URL=${{ secrets.PRODUCT_URL }}${{ matrix.edition }}${{ env.PACKAGE_VERSION }}.TARGETARCH.rpm
