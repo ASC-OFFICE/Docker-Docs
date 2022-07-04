@@ -1,8 +1,11 @@
 ## buildx bake configurations ###
+
+## TAG for docker image example docker.io/product_name:$TAG ## 
 variable "TAG" {
     default = "" 
 }
 
+## Name docker hub account for login in registry ## 
 variable "ACCOUNT_NAME" { 
     default = "" 
 }
@@ -37,7 +40,6 @@ target "proxy" {
         "PRODUCT_EDITION": "${PRODUCT_EDITION}"
         "COMPANY_NAME": "${COMPANY_NAME}"
         "PRODUCT_URL": "${PRODUCT_URL}"
-        "TAG": "${TAG}"
     }
 }
 
@@ -49,7 +51,6 @@ target "converter" {
         "PRODUCT_EDITION": "${PRODUCT_EDITION}"
         "COMPANY_NAME": "${COMPANY_NAME}"
         "PRODUCT_URL": "${PRODUCT_URL}"
-        "TAG": "${TAG}"
     }
 }
 
@@ -61,7 +62,6 @@ target "docservice" {
         "PRODUCT_EDITION": "${PRODUCT_EDITION}"
         "COMPANY_NAME": "${COMPANY_NAME}"
         "PRODUCT_URL": "${PRODUCT_URL}"
-        "TAG": "${TAG}" 
     }
 }
 
