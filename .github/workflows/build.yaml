@@ -67,7 +67,7 @@ jobs:
         uses: docker/bake-action@v2.1.0
         with:
           set: |
-            *.TAG=$DOCKER_TAG
+            *.args.TAG=$DOCKER_TAG
             *.args.PRODUCT_EDITION=${{ matrix.editions }}
             *.args.COMPANY_NAME=${{ secrets.COMPANY_NAME }}
             *.args.PRODUCT_URL=${{ secrets.PRODUCT_URL }}$PACKAGE_VERSION.TARGETARCH.rpm

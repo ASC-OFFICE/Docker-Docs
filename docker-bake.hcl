@@ -37,6 +37,7 @@ target "proxy" {
         "PRODUCT_EDITION": "${PRODUCT_EDITION}"
         "COMPANY_NAME": "${COMPANY_NAME}"
         "PRODUCT_URL": "${PRODUCT_URL}"
+        "TAG": "${TAG}"
     }
 }
 
@@ -48,6 +49,7 @@ target "converter" {
         "PRODUCT_EDITION": "${PRODUCT_EDITION}"
         "COMPANY_NAME": "${COMPANY_NAME}"
         "PRODUCT_URL": "${PRODUCT_URL}"
+        "TAG": "${TAG}"
     }
 }
 
@@ -59,5 +61,6 @@ target "docservice" {
         "PRODUCT_EDITION": "${PRODUCT_EDITION}"
         "COMPANY_NAME": "${COMPANY_NAME}"
         "PRODUCT_URL": "${PRODUCT_URL}"
+        "TAG": "${TAG}" 
     }
 }
