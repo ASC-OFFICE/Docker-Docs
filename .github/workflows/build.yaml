@@ -38,7 +38,12 @@ jobs:
       - name: Set package version env
         run: |
           echo "DOCKER_TAG=$(echo ${{ steps.tag_name.outputs.SOURCE_TAG }} | sed 's/^.//')" >> $GITHUB_ENV
-          echo "PACKAGE_VERSION=$(echo ${{ env.DOCKER_TAG }} | sed -E 's/(.*)\./\1-/')" >> GITHUB_ENV
+          echo "PACKAGE_VERSION=$(echo ${{ env.DOCKER_TAG }} | sed -E 's/(.*)\./\1-/')" >> $GITHUB_ENV
+
+      - name: Check variables
+        run: | 
+          echo $DOCKER_TAG
+          echo $PACKAGE_VERSION 
 
           # - name: Build Community-Edition
           # run: |
@@ -58,10 +63,10 @@ jobs:
         uses: docker/bake-action@v2.1.0
         with:
           set: |
-            *.args.TAG=${{ env.DOCKER_TAG }}
+            *.args.TAG=$DOCKER_TAG
             *.args.PRODUCT_EDITION=${{ matrix.editions }}
             *.args.COMPANY_NAME=${{ secrets.COMPANY_NAME }}
-            *.args.PRODUCT_URL=${{ secrets.PRODUCT_URL }}${{ env.PACKAGE_VERSION }}.TARGETARCH.rpm
+            *.args.PRODUCT_URL=${{ secrets.PRODUCT_URL }}$PACKAGE_VERSION.TARGETARCH.rpm
             *.args.ACCOUNT_NAME=${{ secrets.ACCOUNT_NAME }}
           push: true
           files: docker-bake.hcl
