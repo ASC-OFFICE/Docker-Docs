@@ -62,8 +62,8 @@ jobs:
       - name: Build and push
         uses: docker/bake-action@v2.1.0
         with:
-          TAG=$DOCKER_TAG
           set: |
+            TAG=$DOCKER_TAG
             *.args.PRODUCT_EDITION=${{ matrix.editions }}
             *.args.COMPANY_NAME=${{ secrets.COMPANY_NAME }}
             *.args.PRODUCT_URL=${{ secrets.PRODUCT_URL }}$PACKAGE_VERSION.TARGETARCH.rpm
