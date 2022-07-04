@@ -65,4 +65,4 @@ jobs:
             *.args.ACCOUNT_NAME=${{ secrets.ACCOUNT_NAME }}
           push: true
           files: docker-bake.hcl
-          targets:  
+          targets: default 
