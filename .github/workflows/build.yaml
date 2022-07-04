@@ -54,15 +54,15 @@ jobs:
           #  --push
           # shell: bash
        
-      -  name: Build and push
-         uses: docker/bake-action@master
-         set: |
-           *.args.TAG=${{ env.DOCKER_TAG }} 
-           *.args.PRODUCT_EDITION=${{ matrix.editions }} 
-           *.args.COMPANY_NAME=${{ secrets.COMPANY_NAME }} 
-           *.args.PRODUCT_URL=${{ secrets.PRODUCT_URL }}${{ env.PACKAGE_VERSION }}.TARGETARCH.rpm
-           *.args.ACCOUNT_NAME=${{ secrets.ACCOUNT_NAME }} 
-         with:
-           push: true
-           files: docker-bake.hcl
-           targets: ${{ matrix.images }} 
+      - name: Build and push
+        uses: docker/bake-action@2.1.0
+        with:
+          set: |
+            *.args.TAG=${{ env.DOCKER_TAG }}
+            *.args.PRODUCT_EDITION=${{ matrix.editions }}
+            *.args.COMPANY_NAME=${{ secrets.COMPANY_NAME }}
+            *.args.PRODUCT_URL=${{ secrets.PRODUCT_URL }}${{ env.PACKAGE_VERSION }}.TARGETARCH.rpm
+            *.args.ACCOUNT_NAME=${{ secrets.ACCOUNT_NAME }}
+          push: true
+          files: docker-bake.hcl
+          targets: ${{ matrix.images }} 
