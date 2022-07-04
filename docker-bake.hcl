@@ -1,4 +1,4 @@
-## buildx bake variables ###
+## buildx bake configurations ###
 variable "TAG" {
     default = "" 
 }
