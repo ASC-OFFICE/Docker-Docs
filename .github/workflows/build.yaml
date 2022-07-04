@@ -66,7 +66,7 @@ jobs:
         with:
           set: |
             proxy.tags=docker.io/${{ secrets.ACCOUNT_NAME }}/docs-proxy${{ matrix.edition }}:${{ env.DOCKER_TAG }}
-            converter.tags=docker.io/${ secrets.ACCOUNT_NAME }}/docs-converter${{ matrix.edition }}:${{ env.DOCKER_TAG }}
+            converter.tags=docker.io/${{ secrets.ACCOUNT_NAME }}/docs-converter${{ matrix.edition }}:${{ env.DOCKER_TAG }}
             docservice.tags=docker.io/${{ secrets.ACCOUNT_NAME }}/docs-docservice${{ matrix.edition }}:${{ env.DOCKER_TAG }}
             *.args.PRODUCT_EDITION=${{ matrix.edition }}
             *.args.COMPANY_NAME=${{ secrets.COMPANY_NAME }}
