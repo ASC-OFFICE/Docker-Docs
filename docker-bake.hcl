@@ -32,7 +32,7 @@ group "default" {
 target "proxy" {
     target = "proxy"
     tags = ["docker.io/${ACCOUNT_NAME}/${PREFIX_NAME}-proxy${PRODUCT_EDITION}:${TAG}"]
-    platforms = ["linux/amd64,linux/arm64"]
+    platforms = ["linux/amd64"]
     args = {
         "PRODUCT_EDITION": "${PRODUCT_EDITION}"
         "COMPANY_NAME": "${COMPANY_NAME}"
@@ -44,7 +44,7 @@ target "proxy" {
 target "converter" {
     target = "converter"  
     tags = ["docker.io/${ACCOUNT_NAME}/${PREFIX_NAME}-converter${PRODUCT_EDITION}:${TAG}"] 
-    platforms = ["linux/amd64,linux/arm64"]
+    platforms = ["linux/amd64"]
     args = {
         "PRODUCT_EDITION": "${PRODUCT_EDITION}"
         "COMPANY_NAME": "${COMPANY_NAME}"
@@ -56,7 +56,7 @@ target "converter" {
 target "docservice" {
     target = "docservice" 
     tags = ["docker.io/${ACCOUNT_NAME}/${PREFIX_NAME}-docservice${PRODUCT_EDITION}:${TAG}"]
-    platforms = ["linux/amd64,linux/arm64"]
+    platforms = ["linux/amd64"]
     args = {
         "PRODUCT_EDITION": "${PRODUCT_EDITION}"
         "COMPANY_NAME": "${COMPANY_NAME}"
@@ -65,8 +65,3 @@ target "docservice" {
     }
 }
 
-target "utils" {
-    target = "utils"
-    tags = ["docker.io/${ACCOUNT_NAME}/${PREFIX_NAME}-utils:${TAG}"]
-    platforms = ["linux/amd64", "linux/arm64"]
-}
