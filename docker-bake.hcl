@@ -23,7 +23,7 @@ variable "PRODUCT_URL" {
     default = ""
 }
 
-group "apps" {
+group "default" {
     targets = ["proxy", "converter", "docservice"]
 }
 
