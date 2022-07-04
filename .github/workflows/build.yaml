@@ -14,6 +14,9 @@ jobs:
       matrix:
         edition: [ "-ee" ]
         images: [ "proxy docservice converter" ]
+        include:
+          - edition: "" 
+            images: "utils proxy"
     steps:
       - name: Checkout code 
         uses: actions/checkout@v3
