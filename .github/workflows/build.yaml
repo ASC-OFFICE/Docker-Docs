@@ -55,7 +55,7 @@ jobs:
           # shell: bash
        
       - name: Build and push
-        uses: docker/bake-action@2.1.0
+        uses: docker/bake-action@v2.1.0
         with:
           set: |
             *.args.TAG=${{ env.DOCKER_TAG }}
