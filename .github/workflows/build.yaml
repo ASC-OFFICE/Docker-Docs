@@ -1,5 +1,5 @@
 ### This workflow setup instance then build and push images ###
-name: Multi-arch build 
+name: Build 
 
 on:
   push:
@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        edition: [ "", "-ee", "-de"]
+        edition: [ "-ee" ]
         images: [ "proxy docservice converter" ]
     steps:
       - name: Checkout code 
@@ -35,10 +35,26 @@ jobs:
         run: |
           echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
 
-      - name: Build Community-Edition
+      - name: Set build variables
         run: |
-          DOCKER_TAG=$(echo ${{ steps.tag_name.outputs.SOURCE_TAG }} | sed 's/^.//')
-          PRODUCT_EDITION=${{ matrix.edition }} TAG=$DOCKER_TAG \
-            docker buildx bake \
-            -f docker-bake.hcl ${{ matrix.images }} \
-            --push
+          echo "DOCKER_TAG=$(echo ${{ steps.tag_name.outputs.SOURCE_TAG }} | sed 's/^.//')" >> $GITHUB_ENV
+          echo "REPO_OWNER=${{ github.repository_owner }}" >> $GITHUB_ENV
+
+      - name: Set repo owner vairable for specific repository
+        run: |
+          if [[ ${{ env.REPO_OWNER }} == "ASC-OFFICE" ]]; then 
+             echo "PACKAGE_VERSION=$(echo $DOCKER_TAG | sed -E 's/(.*)\./\1-/' | sed -E 's/^/-/')" >> $GITHUB_ENV
+        
+      - name: Build and push images
+        uses: docker/bake-action@v2.1.0
+        with:
+          set: |
+            proxy.tags=docker.io/${{ secrets.ACCOUNT_NAME }}/docs-proxy${{ matrix.edition }}:${{ env.DOCKER_TAG }}
+            converter.tags=docker.io/${{ secrets.ACCOUNT_NAME }}/docs-converter${{ matrix.edition }}:${{ env.DOCKER_TAG }} 
+            docservice.tags=docker.io/${{ secrets.ACCOUNT_NAME }}/docs-docservice${{ matrix.edition }}:${{ env.DOCKER_TAG }}
+            *.args.PRODUCT_EDITION=${{ matrix.edition }}
+            *.args.COMPANY_NAME=${{ secrets.COMPANY_NAME }}
+            *.args.PRODUCT_URL=${{ secrets.PRODUCT_URL }}${{ matrix.edition }}${{ env.PACKAGE_VERSION }}.TARGETARCH.rpm
+          push: true
+          files: docker-bake.hcl
+          targets: default 
