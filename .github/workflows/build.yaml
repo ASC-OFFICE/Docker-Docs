@@ -38,7 +38,7 @@ jobs:
       - name: Set build variables
         run: |
           echo "DOCKER_TAG=$(echo ${{ steps.tag_name.outputs.SOURCE_TAG }} | sed 's/^.//')" >> $GITHUB_ENV
-          echo "REPO_NAME=${{ github.event.repository.name }}" >> $GITHUB_ENV
+          echo "REPO_NAME=${{ github.event.repository_owner.name }}" >> $GITHUB_ENV
 
       - name: Set package version vairable for specific repository
         run: |
