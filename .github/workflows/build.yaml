@@ -42,7 +42,8 @@ jobs:
 
       - name: Set package version vairable for specific repository
         run: |
-          if [[ ${{ env.REPO_NAME }} == "Docker-Docs-ASC" ]]; then 
+          echo ${{ env.REPO_NAME }} 
+          if [[ ${{ env.REPO_NAME }} == "ASC-OFFICE" ]]; then 
              echo "PACKAGE_VERSION=$(echo $DOCKER_TAG | sed -E 's/(.*)\./\1-/' | sed -E 's/^/-/')" >> $GITHUB_ENV
 
           #- name: Build Community-Edition
