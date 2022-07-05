@@ -1,10 +1,17 @@
 ## buildx bake configurations ###
+
+## TAG for docker image example docker.io/product_name:$TAG ## 
 variable "TAG" {
     default = "" 
 }
 
+## Name docker hub account for login in registry ## 
+variable "ACCOUNT_NAME" { 
+    default = "" 
+}
+
 variable "COMPANY_NAME" { 
-    default = "onlyoffice" 
+    default = ""
 }
 
 variable "PREFIX_NAME" { 
@@ -15,33 +22,45 @@ variable "PRODUCT_EDITION" {
     default = ""
 }
 
-group "apps" {
+variable "PRODUCT_URL" {
+    default = ""
+}
+
+group "default" {
     targets = ["proxy", "converter", "docservice"]
 }
 
+### buildx bake targets ###
+
 target "proxy" {
     target = "proxy"
-    tags = ["docker.io/${COMPANY_NAME}/${PREFIX_NAME}-proxy${PRODUCT_EDITION}:${TAG}"]
-    platforms = ["linux/amd64", "linux/arm64"]
+    tags = ["docker.io/${ACCOUNT_NAME}/${PREFIX_NAME}-proxy${PRODUCT_EDITION}:${TAG}"]
+    platforms = ["linux/amd64"]
     args = {
         "PRODUCT_EDITION": "${PRODUCT_EDITION}"
+        "COMPANY_NAME": "${COMPANY_NAME}"
+        "PRODUCT_URL": "${PRODUCT_URL}"
     }
 }
 
 target "converter" {
     target = "converter"  
-    tags = ["docker.io/${COMPANY_NAME}/${PREFIX_NAME}-converter${PRODUCT_EDITION}:${TAG}"] 
-    platforms = ["linux/amd64", "linux/arm64"]
+    tags = ["docker.io/${ACCOUNT_NAME}/${PREFIX_NAME}-converter${PRODUCT_EDITION}:${TAG}"] 
+    platforms = ["linux/amd64"]
     args = {
         "PRODUCT_EDITION": "${PRODUCT_EDITION}"
+        "COMPANY_NAME": "${COMPANY_NAME}"
+        "PRODUCT_URL": "${PRODUCT_URL}"
     }
 }
 
 target "docservice" {
     target = "docservice" 
-    tags = ["docker.io/${COMPANY_NAME}/${PREFIX_NAME}-docservice${PRODUCT_EDITION}:${TAG}"]
-    platforms = ["linux/amd64", "linux/arm64"]
+    tags = ["docker.io/${ACCOUNT_NAME}/${PREFIX_NAME}-docservice${PRODUCT_EDITION}:${TAG}"]
+    platforms = ["linux/amd64"]
     args = {
         "PRODUCT_EDITION": "${PRODUCT_EDITION}"
+        "COMPANY_NAME": "${COMPANY_NAME}"
+        "PRODUCT_URL": "${PRODUCT_URL}"
     }
 }
