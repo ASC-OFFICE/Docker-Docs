@@ -1,11 +1,9 @@
 ## buildx bake configurations ###
 
-## TAG for docker image example docker.io/product_name:$TAG ## 
 variable "TAG" {
     default = "" 
 }
 
-## Name docker hub account for login in registry ## 
 variable "ACCOUNT_NAME" { 
     default = "" 
 }
@@ -31,7 +29,6 @@ group "default" {
 }
 
 ### buildx bake targets ###
-
 target "proxy" {
     target = "proxy"
     tags = ["docker.io/${ACCOUNT_NAME}/${PREFIX_NAME}-proxy${PRODUCT_EDITION}:${TAG}"]
